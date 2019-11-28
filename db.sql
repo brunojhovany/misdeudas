@@ -1,14 +1,14 @@
 -- tabla de usuarios
 CREATE SCHEMA seguridad;
 
-CREATE SEQUENCE seguridad.id_usuario_seq owned by seguridad.usuario.id_usuario;
 
-CREATE TABLE IF NOT EXISTS seguridad.usuario(
+CREATE TABLE seguridad.usuario(
 id_usuario SERIAL PRIMARY KEY,
 nombre_usuario VARCHAR(50) UNIQUE NOT NULL,
 password_usuario VARCHAR (300) NOT NULL,
 salt_usuario VARCHAR (50));
  
+CREATE SEQUENCE seguridad.id_usuario_seq owned by seguridad.usuario.id_usuario;
 alter table seguridad.usuario alter column id_usuario set default nextval('seguridad.id_usuario_seq');
 
 ----------------------------------------------------------------------------------------------------------
