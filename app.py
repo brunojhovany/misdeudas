@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
 
 import os
@@ -9,7 +9,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 from models import usuario
 
+
 @app.route('/')
 def hello_world():
-    return usuario.Usuario.query.all()
-    # return 
+    usuarios = usuario.Usuario.query.all()
+    return jsonify([e.serialize() for e in usuarios])

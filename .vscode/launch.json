@@ -12,12 +12,14 @@
             "env": {
                 "FLASK_APP": "app.py",
                 "FLASK_ENV": "development",
-                "FLASK_DEBUG": "0"
+                "FLASK_DEBUG": "0",
+                "APP_SETTINGS": "config.DevelopmentConfig",
+                "DATABASE_URL":""
             },
             "args": [
                 "run",
                 "--host=0.0.0.0",
-                "-p 3000",
+                "-p 2000",
                 "--no-debugger",
                 "--no-reload"
             ],
