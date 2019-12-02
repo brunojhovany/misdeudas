@@ -20,3 +20,7 @@ class Usuario(db.Model):
             'password_usuario': self.password_usuario,
             'salt_usuario': self.salt_usuario
         }
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
