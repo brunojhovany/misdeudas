@@ -1,6 +1,7 @@
 from flask_restful import Resource, reqparse
 from models import usuario
 from flask import jsonify
+from util import utilerias
 
 
 parser = reqparse.RequestParser()
@@ -11,11 +12,12 @@ parser.add_argument('password', help='this field is required', required=True)
 class UsuarioRegister(Resource):
     def post(self):
         data = parser.parse_args()
+        results = utilerias.Utilerias.hashpassword(data['password'])
         newUser = usuario.Usuario(
             nombre_usuario=data['username'],
-            password_usuario=data['password'],
-            salt_usuario='SDFQEWERAdwrwaedfs=='
-            )
+            password_usuario=results[0],
+            salt_usuario=results[1]
+        )
         try:
             newUser.save()
             return {'message': 'User {} was created'.format(data['username'])}
