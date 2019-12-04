@@ -27,4 +27,9 @@ class Usuario(db.Model):
 
     @classmethod
     def find_by_username(cls, username):
-        return cls.query.filter_by(username=username).first()
+        return cls.query.filter_by(nombre_usuario=username).first()
+
+    @classmethod
+    def get_all_usuers(cls):
+        usuarios = cls.query.all()
+        return {'users': list(map(lambda element: cls.serialize(), usuarios))}
