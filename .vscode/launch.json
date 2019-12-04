@@ -13,13 +13,12 @@
                 "FLASK_APP": "app.py",
                 "FLASK_ENV": "development",
                 "FLASK_DEBUG": "0",
-                "APP_SETTINGS": "config.DevelopmentConfig",
-                "DATABASE_URL":""
+                "APP_SETTINGS": "config.DevelopmentConfig"
             },
             "args": [
                 "run",
                 "--host=0.0.0.0",
-                "-p 2000",
+                "-p 3000",
                 "--no-debugger",
                 "--no-reload"
             ],

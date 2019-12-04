@@ -50,3 +50,13 @@ class AllUsers(Resource):
 class TestSecurity(Resource):
     def post(self):
         return {'message': 420}
+
+
+class TestEncryption(Resource):
+    def post(self):
+        data = parser.parse_args()
+        user = usuario.Usuario.query.filter_by(
+            nombre_usuario=data['username']).first()
+        result = utilerias.Utilerias.machHashText(
+            user.password_usuario, user.salt_usuario, data['password'])
+        return {'encrypt': result}
