@@ -1,6 +1,6 @@
 from flask_restful import Resource, reqparse
 from models import usuario
-from flask import jsonify
+# from flask import jsonify
 from util import utilerias
 
 

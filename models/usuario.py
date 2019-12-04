@@ -32,4 +32,4 @@ class Usuario(db.Model):
     @classmethod
     def get_all_usuers(cls):
         usuarios = cls.query.all()
-        return {'users': list(map(lambda element: cls.serialize(), usuarios))}
+        return {'users': list(map(lambda element: cls.serialize(element), usuarios))}
