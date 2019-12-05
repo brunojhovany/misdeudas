@@ -8,7 +8,7 @@ class RevokedTokenModel(db.Model):
 
     def save(self):
         db.session.add(self)
-        db.commit()
+        db.session.commit()
 
     @classmethod
     def is_jti_blacklisted(cls, jti):
