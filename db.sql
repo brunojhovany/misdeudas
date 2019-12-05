@@ -38,3 +38,12 @@ foreign key (id_estatus) references catalogo.estatus (id_estatus)
 
 CREATE SEQUENCE persona.id_deuda_seq owned by persona.deuda.id_deuda;
 alter table persona.deuda alter column id_deuda set default nextval('persona.id_deuda_seq');
+
+#-----------------------------------------------------------------------
+
+CREATE TABLE seguridad.revoke_token(
+    id_revoke_token serial primary key, 
+    jti_revoke_token varchar (120)
+)
+CREATE SEQUENCE seguridad.id_revoke_token_seq OWNED by seguridad.revoke_token.id_revoke_token;
+ALTER table seguridad.revoke_token alter COLUMN id_revoke_token set DEFAULT nextval('seguridad.id_revoke_token_seq');
