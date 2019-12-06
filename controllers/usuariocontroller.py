@@ -66,7 +66,7 @@ class UsuarioLogout(Resource):
             return {'message': 'something went wrong'}, 500
 
 
-class UserLogoutRefresh(Resource):
+class UsuarioLogoutRefresh(Resource):
     @jwt_refresh_token_required
     def post(self):
         jti = get_raw_jwt()['jti']

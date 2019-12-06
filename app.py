@@ -26,9 +26,10 @@ def check_if_token_in_blacklist(decrypted_token):
     return jwtblacklist.RevokedTokenModel.is_jti_blacklisted(jti)
 
 
-api.add_resource(controllers.usuariocontroller.UsuarioLogin, '/login')
-api.add_resource(controllers.usuariocontroller.UsuarioLogout, '/logout')
-api.add_resource(controllers.usuariocontroller.TokenRefresh, '/refresh_token')
 api.add_resource(controllers.usuariocontroller.AllUsers, '/usuario')
 api.add_resource(controllers.usuariocontroller.UsuarioRegister, '/registro')
+api.add_resource(controllers.usuariocontroller.UsuarioLogin, '/auth/login')
+api.add_resource(controllers.usuariocontroller.TokenRefresh, '/auth/refresh')
+api.add_resource(controllers.usuariocontroller.UsuarioLogout, '/auth/logout/access')
+api.add_resource(controllers.usuariocontroller.UsuarioLogoutRefresh, '/auth/logout/refresh')
 api.add_resource(controllers.usuariocontroller.TestSecurity, '/testsecurity')
