@@ -58,3 +58,9 @@ create table catalogo.entidad_bancaria(
 
 CREATE SEQUENCE catalogo.id_entidad_bancaria_seq OWNED by catalogo.entidad_bancaria.id_entidad;
 ALTER TABLE catalogo.entidad_bancaria ALTER COLUMN id_entidad SET DEFAULT nextval('catalogo.id_entidad_bancaria_seq');
+
+---------------------------------------------------------------------------------------------------------------
+
+ALTER TABLE persona.deuda ADD COLUMN id_entidad_bancaria FOREIGN KEY (id_entidad_bancaria) REFERENCES catalogo.entidad_bancaria(id_entidad_bancaria);
+alter table persona.deuda rename column id_suario to id_usuario;
+alter table persona.deuda add constraint id_usuario_fk foreign key (id_usuario) references seguridad.usuario(id_usuario)
