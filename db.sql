@@ -64,3 +64,19 @@ ALTER TABLE catalogo.entidad_bancaria ALTER COLUMN id_entidad SET DEFAULT nextva
 ALTER TABLE persona.deuda ADD COLUMN id_entidad_bancaria FOREIGN KEY (id_entidad_bancaria) REFERENCES catalogo.entidad_bancaria(id_entidad_bancaria);
 alter table persona.deuda rename column id_suario to id_usuario;
 alter table persona.deuda add constraint id_usuario_fk foreign key (id_usuario) references seguridad.usuario(id_usuario)
+
+
+---------------------------------------------------------------------------------------------------------------
+create table persona.mensualidad(
+id_deuda serial not null,
+id_pago int not null,
+id_usuario serial not null,
+monto_mensualidad money not null,
+	primary key (id_deuda,id_pago),
+	foreign key (id_deuda) references persona.deuda(id_deuda)
+);
+
+alter table persona.mensualidad add column fecha_pago date not null;
+alter table persona.mensualidad add column id_estatus int not null;
+
+alter table persona.mensualidad add constraint id_estatus_fk foreign key (id_estatus) references catalogo.estatus(id_estatus);

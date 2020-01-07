@@ -1,6 +1,5 @@
 from flask_restful import Resource, reqparse
-from models import usuario, jwtblacklist
-# from flask import jsonify
+from models import entities
 from util import utilerias
 from flask_jwt_extended import (create_access_token, create_refresh_token, jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
 
@@ -12,11 +11,11 @@ parser.add_argument('password', help='this field is required', required=True)
 class UsuarioRegister(Resource):
     def post(self):
         data = parser.parse_args()
-        if usuario.Usuario.find_by_username(data['username']):
+        if entities.Usuario.find_by_username(data['username']):
             return {'message': 'user {} alredy exists'.format(data['username'])}, 400
 
         results = utilerias.Utilerias.hashpassword(data['password'])
-        newUser = usuario.Usuario(
+        newUser = entities.Usuario(
             nombre_usuario=data['username'],
             password_usuario=results[0],
             salt_usuario=results[1]
@@ -37,7 +36,7 @@ class UsuarioRegister(Resource):
 class UsuarioLogin(Resource):
     def post(self):
         data = parser.parse_args()
-        current_user = usuario.Usuario.find_by_username(data['username'])
+        current_user = entities.Usuario.find_by_username(data['username'])
         if not current_user:
             return {'message': 'User {} doesn\'t exists'.format(data['username'])}
 
@@ -59,7 +58,7 @@ class UsuarioLogout(Resource):
     def post(self):
         jti = get_raw_jwt()['jti']
         try:
-            revoked_token = jwtblacklist.RevokedTokenModel(jti_revoke_token=jti)
+            revoked_token = entities.RevokedTokenModel(jti_revoke_token=jti)
             revoked_token.save()
             return {'message': 'Access token has been revoked'}
         except NameError:
@@ -71,7 +70,7 @@ class UsuarioLogoutRefresh(Resource):
     def post(self):
         jti = get_raw_jwt()['jti']
         try:
-            revoked_token = jwtblacklist.RevokedTokenModel(jti_revoke_token=jti)
+            revoked_token = entities.RevokedTokenModel(jti_revoke_token=jti)
             revoked_token.save()
             return {'message': 'Refresh token has been revoked'}
         except NameError:
@@ -88,7 +87,7 @@ class TokenRefresh(Resource):
 
 class AllUsers(Resource):
     def get(self):
-        return usuario.Usuario.get_all_usuers()
+        return entities.Usuario.get_all_usuers()
         # usuarios = usuario.Usuario.query.all()
         # return jsonify([e.serialize() for e in usuarios])
 

@@ -17,6 +17,7 @@ jwt = JWTManager(app)
 
 
 import controllers.usuariocontroller
+import controllers.admonappcontroller
 from models import jwtblacklist
 
 
@@ -33,3 +34,5 @@ api.add_resource(controllers.usuariocontroller.TokenRefresh, '/auth/refresh')
 api.add_resource(controllers.usuariocontroller.UsuarioLogout, '/auth/logout/access')
 api.add_resource(controllers.usuariocontroller.UsuarioLogoutRefresh, '/auth/logout/refresh')
 api.add_resource(controllers.usuariocontroller.TestSecurity, '/testsecurity')
+
+api.add_resource(controllers.admonappcontroller.GetEstatus, '/admon/estatus')
