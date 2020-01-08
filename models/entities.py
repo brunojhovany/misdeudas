@@ -20,7 +20,7 @@ class Usuario(db.Model):
             'nombre_usuario': self.nombre_usuario,
             'password_usuario': self.password_usuario,
             'salt_usuario': self.salt_usuario,
-            'id_estatus': self.id_estatus
+            'estatus': Estatus.serialize(self.estatus)
         }
 
     def save(self):
@@ -43,7 +43,7 @@ class Estatus (db.Model):
     id_estatus = db.Column(db.Integer, primary_key=True)
     descripcion_estatus = db.Column(db.String)
 
-    usuarios = db.relationship('Usuario', backref='usuario', lazy='dynamic')
+    usuarios = db.relationship('Usuario', backref='estatus', lazy='dynamic')
     entidadesbancarias = db.relationship('Entidad_Bancaria', backref='estatus', lazy='dynamic')
 
     def serialize(self):
@@ -77,7 +77,7 @@ class Entidad_Bancaria(db.Model):
         return {
             'id_entidad': self.id_entidad,
             'descripcion_entidad': self.descripcion_entidad,
-            'id_estatus': self.id_estatus,
+            # 'id_estatus': self.id_estatus,
             'estatus': Estatus.serialize(self.estatus)
         }
 
