@@ -18,13 +18,13 @@ jwt = JWTManager(app)
 
 import controllers.usuariocontroller
 import controllers.admonappcontroller
-from models import jwtblacklist
+from models import entities
 
 
 @jwt.token_in_blacklist_loader
 def check_if_token_in_blacklist(decrypted_token):
     jti = decrypted_token['jti']
-    return jwtblacklist.RevokedTokenModel.is_jti_blacklisted(jti)
+    return entities.RevokedTokenModel.is_jti_blacklisted(jti)
 
 
 api.add_resource(controllers.usuariocontroller.AllUsers, '/usuario')
@@ -35,4 +35,5 @@ api.add_resource(controllers.usuariocontroller.UsuarioLogout, '/auth/logout/acce
 api.add_resource(controllers.usuariocontroller.UsuarioLogoutRefresh, '/auth/logout/refresh')
 api.add_resource(controllers.usuariocontroller.TestSecurity, '/testsecurity')
 
-api.add_resource(controllers.admonappcontroller.GetEstatus, '/admon/estatus')
+api.add_resource(controllers.admonappcontroller.Estatus, '/admon/estatus')
+api.add_resource(controllers.admonappcontroller.Entidad_Bancaria, '/admon/Entidad_Bancaria')

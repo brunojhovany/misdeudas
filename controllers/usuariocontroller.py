@@ -88,8 +88,6 @@ class TokenRefresh(Resource):
 class AllUsers(Resource):
     def get(self):
         return entities.Usuario.get_all_usuers()
-        # usuarios = usuario.Usuario.query.all()
-        # return jsonify([e.serialize() for e in usuarios])
 
 
 class TestSecurity(Resource):

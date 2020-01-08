@@ -5,6 +5,10 @@ from models import entities
 # parser.add_argument('')
 
 
-class GetEstatus(Resource):
+class Estatus(Resource):
     def get(self):
         return entities.Estatus.get_all_estatus()
+
+class Entidad_Bancaria(Resource):
+    def get(self):
+        return entities.Entidad_Bancaria.get_all_entidad_bancaria()

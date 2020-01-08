@@ -43,8 +43,8 @@ class Estatus (db.Model):
     id_estatus = db.Column(db.Integer, primary_key=True)
     descripcion_estatus = db.Column(db.String)
 
-    usuarios = db.relationship('Usuario', backref='usuario', lazy=True)
-    entidadesbancarias = db.relationship('Entidad_Bancaria', backref='estatus', lazy=True)
+    usuarios = db.relationship('Usuario', backref='usuario', lazy='dynamic')
+    entidadesbancarias = db.relationship('Entidad_Bancaria', backref='estatus', lazy='dynamic')
 
     def serialize(self):
         return {
@@ -76,7 +76,9 @@ class Entidad_Bancaria(db.Model):
     def serialize(self):
         return {
             'id_entidad': self.id_entidad,
-            'descripcion_entidad': self.descripcion_entidad
+            'descripcion_entidad': self.descripcion_entidad,
+            'id_estatus': self.id_estatus,
+            'estatus': Estatus.serialize(self.estatus)
         }
 
     def save(self):
@@ -85,8 +87,8 @@ class Entidad_Bancaria(db.Model):
 
     @classmethod
     def get_all_entidad_bancaria(cls):
-        estatus = cls.query.all()
-        return {'bancos': list(map(lambda element: cls.serialize(element), estatus))}
+        entidadesbancarias = cls.query.all()
+        return {'bancos': list(map(lambda element: cls.serialize(element), entidadesbancarias))}
 
 class RevokedTokenModel(db.Model):
     __tablename__ = 'revoke_token'
