@@ -1,5 +1,5 @@
-from flask_restful import Resource, reqparse
-from models import estatus
+from flask_restful import Resource  # , reqparse
+from models import entities
 
 # parser = reqparse.RequestParser()
 # parser.add_argument('')
@@ -7,4 +7,4 @@ from models import estatus
 
 class GetEstatus(Resource):
     def get(self):
-        return estatus.Estatus.get_all_estatus()
+        return entities.Estatus.get_all_estatus()

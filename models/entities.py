@@ -44,7 +44,7 @@ class Estatus (db.Model):
     descripcion_estatus = db.Column(db.String)
 
     usuarios = db.relationship('Usuario', backref='usuario', lazy=True)
-    # entidadesbancarias = db.relationship('Entidad_Bancaria', backref='estatus', lazy=True)
+    entidadesbancarias = db.relationship('Entidad_Bancaria', backref='estatus', lazy=True)
 
     def serialize(self):
         return {
@@ -84,9 +84,9 @@ class Entidad_Bancaria(db.Model):
         db.session.commit()
 
     @classmethod
-    def get_all_estatus(cls):
+    def get_all_entidad_bancaria(cls):
         estatus = cls.query.all()
-        return {'estatus': list(map(lambda element: cls.serialize(element), estatus))}
+        return {'bancos': list(map(lambda element: cls.serialize(element), estatus))}
 
 class RevokedTokenModel(db.Model):
     __tablename__ = 'revoke_token'

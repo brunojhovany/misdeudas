@@ -1,2 +1,0 @@
-# class JWTpayload():
-#     identity
