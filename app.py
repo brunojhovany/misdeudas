@@ -18,6 +18,7 @@ jwt = JWTManager(app)
 
 import controllers.usuariocontroller
 import controllers.admonappcontroller
+import controllers.deudacontroller
 from models import entities
 
 
@@ -37,3 +38,6 @@ api.add_resource(controllers.usuariocontroller.TestSecurity, '/testsecurity')
 
 api.add_resource(controllers.admonappcontroller.Estatus, '/admon/estatus')
 api.add_resource(controllers.admonappcontroller.Entidad_Bancaria, '/admon/Entidad_Bancaria')
+
+
+api.add_resource(controllers.deudacontroller.deuda_del_mes, '/control/deuda-del-mes')
