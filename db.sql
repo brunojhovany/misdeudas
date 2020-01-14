@@ -80,3 +80,21 @@ alter table persona.mensualidad add column fecha_pago date not null;
 alter table persona.mensualidad add column id_estatus int not null;
 
 alter table persona.mensualidad add constraint id_estatus_fk foreign key (id_estatus) references catalogo.estatus(id_estatus);
+
+----------------------------------------------------------------------------------------------------------------
+create table catalogo.rol (
+id_rol int primary key,
+descripcion_rol varchar(40),
+id_estatus int not null,
+foreign key(id_estatus) references catalogo.estatus(id_estatus)
+)
+
+create table seguridad.rol_por_usuario
+(
+id_rol int not null,
+id_usuario int not null,
+id_estatus int not null,
+primary key(id_rol,id_usuario),
+foreign key(id_rol) references catalogo.rol(id_rol),
+foreign key(id_usuario) references seguridad.usuario(id_usuario)
+)
