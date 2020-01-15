@@ -18,16 +18,15 @@ class UsuarioRegister(Resource):
         newUser = entities.Usuario(
             nombre_usuario=data['username'],
             password_usuario=results[0],
-            salt_usuario=results[1]
+            salt_usuario=results[1],
+            id_estatus=2
         )
         try:
             newUser.save()
-            access_token = create_access_token(identity=data['username'])
-            refresh_token = create_refresh_token(identity=data['username'])
+            # access_token = create_access_token(identity=data['username'])
+            # refresh_token = create_refresh_token(identity=data['username'])
             return {
-                'message': 'User {} was created'.format(data['username']),
-                'access_token': access_token,
-                'refresh_token': refresh_token
+                'message': 'User {} created please contact the administrator to activate your account'.format(data['username'])
             }
         except NameError:
             return {'message': 'something went wrong'}, 500
@@ -42,8 +41,8 @@ class UsuarioLogin(Resource):
 
         if utilerias.Utilerias.matchHashText(
                 current_user.password_usuario, current_user.salt_usuario, data['password']):
-            access_token = create_access_token(identity=data['username'])
-            refresh_token = create_refresh_token(identity=data['username'])
+            access_token = create_access_token(current_user)
+            refresh_token = create_refresh_token(current_user)
             return {
                 'message': 'user logged in as {}'.format(data['username']),
                 'access_token': access_token,

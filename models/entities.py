@@ -12,7 +12,7 @@ class Usuario(db.Model):
     id_estatus = db.Column(db.Integer, db.ForeignKey('catalogo.estatus.id_estatus'), nullable=False)
 
     deuda = db.relationship('Deuda', backref='usuario', lazy='dynamic')
-    rol_por_usario = db.relationship('Rol_Por_Usuario', backref='rol_por_usuario', lazy='dynamic')
+    roles = db.relationship('Rol_Por_Usuario', backref='rol_por_usuario', lazy=True)
 
     def get_id(self):
         return self.nombre_usuario
@@ -50,7 +50,7 @@ class Estatus (db.Model):
     entidadesbancarias = db.relationship('Entidad_Bancaria', backref='estatus', lazy='dynamic')
     deudas = db.relationship('Deuda', backref='estatus', lazy='dynamic')
     mensualidades = db.relationship('Mensualidad', backref='estatus', lazy='dynamic')
-    rol_por_usario = db.relationship('Rol_Por_Usuario', backref='rol_por_usuario', lazy='dynamic')
+    rolporusario = db.relationship('Rol_Por_Usuario', backref='rpu', lazy='dynamic')
 
     def serialize(self):
         return {
@@ -173,7 +173,7 @@ class Rol(db.Model):
     id_rol = db.Column(db.Integer, primary_key=True)
     descripcion_rol = db.Column(db.String(40), nullable=False)
 
-    rol_por_usario = db.relationship('Rol_Por_Usuario', backref='rol_por_usuario', lazy='dynamic')
+    rolporusario = db.relationship('Rol_Por_Usuario', backref='rol_porusuario', lazy='dynamic')
 
 
 class Rol_Por_Usuario(db.Model):
@@ -182,3 +182,10 @@ class Rol_Por_Usuario(db.Model):
     id_rol = db.Column(db.Integer, db.ForeignKey('catalogo.rol.id_rol'), primary_key=True)
     id_usuario = db.Column(db.Integer, db.ForeignKey('seguridad.usuario.id_usuario'), primary_key=True)
     id_estatus = db.Column(db.Integer, db.ForeignKey('catalogo.estatus.id_estatus'), nullable=False)
+
+    def __id(self):
+        return self.id_rol
+
+    @classmethod
+    def get_roles(cls, rol_por_usuario):
+        return list(map(lambda element: cls.__id(element), rol_por_usuario))
