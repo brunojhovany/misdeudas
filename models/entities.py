@@ -110,11 +110,18 @@ class Deuda(db.Model):
     id_entidad_bancaria = db.Column(db.Integer, db.ForeignKey('catalogo.entidad_bancaria.id_entidad_bancaria'), nullable=False)
     id_usuario = db.Column(db.Integer, db.ForeignKey('seguridad.usuario.id_usuario'), nullable=False)
 
-    _mensualidades = db.relationship('Mensualidad', backref='deuda', lazy='dynamic')
+    _mensualidades = db.relationship('Mensualidad', backref='deuda', lazy=True)
 
-    def save(self):
-        db.session.add(self)
-        db.session.commit()
+    def save(self, *args):
+        try:
+            db.session.add(self)
+            if args is not None:
+                for ar in args:
+                    db.session.add(ar)
+            db.session.commit()
+        except Exception as error:
+            db.session.rollback()
+            raise error
 
     def serialize(self):
         return {
@@ -135,10 +142,12 @@ class Deuda(db.Model):
         return ''
 
     @classmethod
-    def get_deudas(cls, id_usuario, id_estatus):
+    def get_deudas_by_id_usuario(cls, id_usuario, id_estatus=1, serializable=True):
         deudas = cls.query.filter_by(id_usuario=id_usuario, id_estatus=id_estatus)
-        return {'deudas': list(map(lambda element: cls.serialize(element), deudas))}
-
+        if serializable:
+            return {'deudas': list(map(lambda element: cls.serialize(element), deudas))}
+        else:
+            return deudas
 
 class Mensualidad(db.Model):
     __tablename__ = 'mensualidad'

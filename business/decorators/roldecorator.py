@@ -7,9 +7,7 @@ def requiered_admin(f):
         verify_jwt_in_request()
         claims = get_jwt_claims()
         if 1 not in claims['roles']:
-            return "requiered admin", 401
-        # if user is not logged in, redirect to login page
-
+            return {"message": "requiered admin"}, 401
         return f(*args, **kwargs)
 
     return wrap

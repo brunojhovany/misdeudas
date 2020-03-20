@@ -61,4 +61,4 @@ api.add_resource(controllers.admonappcontroller.Estatus, '/admon/estatus')
 api.add_resource(controllers.admonappcontroller.Entidad_Bancaria, '/admon/Entidad_Bancaria')
 
 
-api.add_resource(controllers.deudacontroller.deuda_del_mes, '/control/deuda-del-mes')
+api.add_resource(controllers.deudacontroller.Deuda, '/control/deuda')
