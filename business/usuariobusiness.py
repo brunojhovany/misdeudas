@@ -2,11 +2,12 @@ from flask import request
 from models.entities import Deuda, Usuario, Mensualidad
 class Usuario_Business():
     @classmethod
-    def Nueva_deuda(cls, nombre_usuario, data):
+    def Nueva_deuda(cls, nombre_usuario):
         mensualidades = request.json['mensualidades']
         if mensualidades:
-            
-        return ''
+            total = float(request.json['total'])
+            return {"Su total a  pagar por mes": total / mensualidades}
+        return {"message": ""}
 
     @classmethod
     def deuda_mensual(cls, nombre_usuario):
