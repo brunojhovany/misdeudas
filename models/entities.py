@@ -78,6 +78,8 @@ class Entidad_Bancaria(db.Model):
     id_entidad_bancaria = db.Column(db.Integer, primary_key=True)
     descripcion_entidad = db.Column(db.String(40))
     id_estatus = db.Column(db.Integer, db.ForeignKey('catalogo.estatus.id_estatus'), nullable=False)
+    fecha_corte = db.Column(db.Integer, nullable=False)
+    fecha_limite_pago = db.Column(db.Integer, nullable=False)
 
     deudas = db.relationship('Deuda', backref='entidad_bancaria', lazy='dynamic')
 
@@ -85,6 +87,8 @@ class Entidad_Bancaria(db.Model):
         return {
             'id_entidad': self.id_entidad_bancaria,
             'descripcion_entidad': self.descripcion_entidad,
+            'fecha_corte': self.fecha_corte,
+            'fecha_limite_pago': self.fecha_limite_pago,
             'estatus': Estatus.serialize(self.estatus)
         }
 
