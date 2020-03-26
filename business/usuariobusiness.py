@@ -1,12 +1,22 @@
 from flask import request
-from models.entities import Deuda, Usuario, Mensualidad
+from models.entities import Deuda, Usuario, Mensualidad, Entidad_Bancaria
+from datetime import datetime
 class Usuario_Business():
     @classmethod
     def Nueva_deuda(cls, nombre_usuario):
+        entidad_bancaria = Entidad_Bancaria.find_by_id(request.json['id_entidad_bancaria'])
+        total = float(request.json['total'])
         mensualidades = request.json['mensualidades']
+        nueva_deuda = Deuda(
+            mensualidades=mensualidades,
+            total=total,
+            fecha=datetime.datetime.strptime(request.json['fecha'], '%Y-%m-%dT%H:%M:%S.%fZ'),
+            entidad_bancaria=request.json['id_entidad_bancaria'],
+            descripcion=request.json['descripcion'],
+        )
         if mensualidades:
-            total = float(request.json['total'])
-            return {"Su total a  pagar por mes": total / mensualidades}
+            total_por_mes = total / mensualidades
+            return {"Su total a  pagar por mes": ""}
         return {"message": ""}
 
     @classmethod

@@ -97,6 +97,10 @@ class Entidad_Bancaria(db.Model):
         db.session.commit()
 
     @classmethod
+    def find_by_id(cls, id_entidad):
+        return cls.query.filter_by(id_entidad_bancaria=id_entidad).first()
+
+    @classmethod
     def get_all_entidad_bancaria(cls):
         entidadesbancarias = cls.query.all()
         return {'bancos': list(map(lambda element: cls.serialize(element), entidadesbancarias))}
