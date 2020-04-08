@@ -1,0 +1,18 @@
+version: "3.7"
+services:
+  misdeudas:
+    image: misdeudas:1.0.0
+    ports:
+      - 7004:3000
+
+  db:
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: dockerpassword
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
