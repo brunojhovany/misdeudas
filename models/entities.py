@@ -1,5 +1,6 @@
 from app import db
 from datetime import date, datetime
+from sqlalchemy import Sequence
 
 
 class Usuario(db.Model):
@@ -108,7 +109,7 @@ class Entidad_Bancaria(db.Model):
 class Deuda(db.Model):
     __tablename__ = 'deuda'
     __table_args__ = {'schema': 'persona'}
-    id_deuda = db.Column(db.Integer, primary_key=True)
+    id_deuda = db.Column(db.Integer, Sequence('persona.deuda_id_deuda_seq'), primary_key=True)
     descripcion_deuda = db.Column(db.String(80))
     fecha_deuda = db.Column(db.DateTime)
     fecha_fin_deuda = db.Column(db.Date)
@@ -130,6 +131,10 @@ class Deuda(db.Model):
         except Exception as error:
             db.session.rollback()
             raise error
+
+    @classmethod
+    def get_next_id_from_seq(cls):
+        return db.engine.execute(Sequence('deuda_id_deuda_seq', schema='persona'))
 
     def serialize(self):
         return {
