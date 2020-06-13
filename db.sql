@@ -56,7 +56,7 @@ create table catalogo.entidad_bancaria(
     FOREIGN KEY(id_estatus) REFERENCES catalogo.estatus(id_estatus)
 );
 
-CREATE SEQUENCE catalogo.id_entidad_bancaria_seq OWNED by catalogo.entidad_bancaria.id_entidad;
+CREATE SEQUENCE catalogo.id_entidad_bancaria_seq OWNED by catalogo.entidad_bancaria.id_entidad_bancaria;
 ALTER TABLE catalogo.entidad_bancaria ALTER COLUMN id_entidad SET DEFAULT nextval('catalogo.id_entidad_bancaria_seq');
 
 ---------------------------------------------------------------------------------------------------------------

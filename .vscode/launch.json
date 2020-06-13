@@ -13,7 +13,9 @@
                 "FLASK_APP": "app.py",
                 "FLASK_ENV": "development",
                 "FLASK_DEBUG": "0",
-                "APP_SETTINGS": "config.DevelopmentConfig"
+                "APP_SETTINGS": "config.DevelopmentConfig",
+                "DATABASE_URL": "postgresql://postgres:docker@0.0.0.0/misdeudas",
+                "JWTSECRET": "FSA2324FAewrr-wer-wer.werf_wef2432qf"
             },
             "args": [
                 "run",

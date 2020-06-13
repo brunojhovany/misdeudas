@@ -121,11 +121,11 @@ class Deuda(db.Model):
 
     _mensualidades = db.relationship('Mensualidad', backref='deuda', lazy=True)
 
-    def save(self, *args):
+    def save(self, mensualidades):
         try:
             db.session.add(self)
-            if args is not None:
-                for ar in args:
+            if mensualidades is not None:
+                for ar in mensualidades:
                     db.session.add(ar)
             db.session.commit()
         except Exception as error:
@@ -134,7 +134,7 @@ class Deuda(db.Model):
 
     @classmethod
     def get_next_id_from_seq(cls):
-        return db.engine.execute(Sequence('deuda_id_deuda_seq', schema='persona'))
+        return db.engine.execute(Sequence('id_deuda_seq', schema='persona'))
 
     def serialize(self):
         return {
@@ -146,7 +146,7 @@ class Deuda(db.Model):
             'total_deuda': '%s' % self.total_deuda,
             'estatus': Estatus.serialize(self.estatus),
             'entidad_bancaria': Entidad_Bancaria.serialize(self.entidad_bancaria),
-            'usuario': Usuario.serialize(self.usuario)
+            # 'usuario': Usuario.serialize(self.usuario)
         }
 
     def json_serial(self, obj):

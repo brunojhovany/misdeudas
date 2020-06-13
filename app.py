@@ -54,6 +54,7 @@ api.add_resource(controllers.usuariocontroller.TokenRefresh, '/auth/refresh')
 api.add_resource(controllers.usuariocontroller.UsuarioLogout, '/auth/logout/access')
 api.add_resource(controllers.usuariocontroller.UsuarioLogoutRefresh, '/auth/logout/refresh')
 api.add_resource(controllers.usuariocontroller.TestSecurity, '/testsecurity')
+api.add_resource(controllers.usuariocontroller.create_dev_token, '/auth/login-dev')
 
 api.add_resource(controllers.admonappcontroller.Estatus, '/admon/estatus')
 api.add_resource(controllers.admonappcontroller.Entidad_Bancaria, '/admon/Entidad_Bancaria')

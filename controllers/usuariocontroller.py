@@ -2,11 +2,29 @@ from flask_restful import Resource, reqparse
 from models import entities
 from util import utilerias
 from flask_jwt_extended import (create_access_token, create_refresh_token, jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
+from datetime import timedelta
+from business.decorators.roldecorator import requiered_admin
 
 parser = reqparse.RequestParser()
 parser.add_argument('username', help='this field is required', required=True)
 parser.add_argument('password', help='this field is required', required=True)
 
+class create_dev_token(Resource):
+    @requiered_admin
+    def post(self):
+        data = parser.parse_args()
+        current_user = entities.Usuario.find_by_username(data['username'])
+        if not current_user:
+            return { 'message':'user {} not found'.format(data['username']) }, 404
+        if utilerias.Utilerias.matchHashText(current_user.password_usuario, current_user.salt_usuario, data['password']):
+            expires = timedelta(days=31)
+            access_token = create_access_token(current_user, expires_delta=expires)
+            return {
+                'message': 'Developer user logged in as {}'.format(data['username']),
+                'access_token': access_token
+            }, 200
+        else:
+            return {'message':'password does not match.'}, 401
 
 class UsuarioRegister(Resource):
     def post(self):
